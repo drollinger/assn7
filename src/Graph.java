@@ -1,6 +1,5 @@
 import java.io.File;
-import java.util.Scanner;
-import java.util.Arrays;
+import java.util.*;
 
 public class Graph {
     int numVertex;  // Number of vertices in the graph.
@@ -68,7 +67,7 @@ public class Graph {
         }
     }
 
-    /**
+    /**                                                                    //TODO: THIS
      * Find the path from v1 to v2 going through anc.
      *
      * @param v1:  first vertex
@@ -84,7 +83,7 @@ public class Graph {
     }
 
     /**
-     * Computes the least common ancestor of v1 and v2, prints the length of the path, the ancestor, and the path itself.
+     * Computes the least common ancestor of v1 and v2, prints the length of the path, the ancestor, and the path itself.    //TODO: THIS
      *
      * @param v1: first vertex
      * @param v2: second vertex
@@ -93,13 +92,53 @@ public class Graph {
     public int lca(int v1, int v2) {
         // Compute lca
         PathInfo best = new PathInfo();
+
+        ArrayList<EdgeInfo> nodeGraph1 = new ArrayList<>();
+        for(int i = 0; i < this.numVertex; i++) {
+            nodeGraph1.add(null);
+        }
+
+        Queue<Integer> nodeQueue1 = new LinkedList<>();
+
+        nodeQueue1.add(v1);
+        int cur = 0;
+
+        while(!nodeQueue1.isEmpty()) {
+            cur = nodeQueue1.remove();
+
+            for(EdgeInfo E : this.G[cur].succ) {
+                nodeGraph1.add(E.to, E);
+                nodeQueue1.add(E.to);
+            }
+        }
+
+        ArrayList<EdgeInfo> nodeGraph2 = new ArrayList<>();
+        for(int i = 0; i < this.numVertex; i++) {
+            nodeGraph2.add(null);
+        }
+        Queue<Integer> nodeQueue2 = new LinkedList<>();
+
+        nodeQueue2.add(v2);
+
+        while(!nodeQueue2.isEmpty() && nodeGraph1.get(cur) != null) {
+            cur = nodeQueue2.remove();
+
+            for(EdgeInfo E : this.G[cur].succ) {
+                nodeGraph2.add(E.to, E);
+                nodeQueue2.add(E.to);
+            }
+        }
+
+        System.out.println(cur);
+
+
         System.out.println( graphName + " Best lca " + v1 + " " + v2 + " Distance: " + best.dist + " Ancestor " + best.pred + " Path:" + reportPath( v1, v2, best.pred ) );
 
         clearAllPred();
         return best.dist;
     }
 
-    public int outcast(int[] v) {
+    public int outcast(int[] v) {                    //TODO: THIS
         int outcast = -1;
 
         System.out.println( "The outcast of " + Arrays.toString( v ) + " is " + outcast );
