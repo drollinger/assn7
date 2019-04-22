@@ -93,44 +93,47 @@ public class Graph {
         // Compute lca
         PathInfo best = new PathInfo();
 
-        ArrayList<EdgeInfo> nodeGraph1 = new ArrayList<>();
+        int[] nodeGraph1 = new int[numVertex];
         for(int i = 0; i < this.numVertex; i++) {
-            nodeGraph1.add(null);
+            nodeGraph1[i] = -1;
         }
 
         Queue<Integer> nodeQueue1 = new LinkedList<>();
 
         nodeQueue1.add(v1);
-        int cur = 0;
+        nodeGraph1[v1] = numVertex + 1;
+        int cur;
 
         while(!nodeQueue1.isEmpty()) {
             cur = nodeQueue1.remove();
 
             for(EdgeInfo E : this.G[cur].succ) {
-                nodeGraph1.add(E.to, E);
+                nodeGraph1[E.to] = E.from;
                 nodeQueue1.add(E.to);
             }
         }
 
-        ArrayList<EdgeInfo> nodeGraph2 = new ArrayList<>();
+        int[] nodeGraph2 = new int[numVertex];
         for(int i = 0; i < this.numVertex; i++) {
-            nodeGraph2.add(null);
+            nodeGraph2[i] = -1;
         }
         Queue<Integer> nodeQueue2 = new LinkedList<>();
 
         nodeQueue2.add(v2);
+        cur = v2;
 
-        while(!nodeQueue2.isEmpty() && nodeGraph1.get(cur) != null) {
+        while(!nodeQueue2.isEmpty() && nodeGraph1[cur] < 0) {
             cur = nodeQueue2.remove();
 
             for(EdgeInfo E : this.G[cur].succ) {
-                nodeGraph2.add(E.to, E);
+                nodeGraph2[E.to] = E.from;
                 nodeQueue2.add(E.to);
             }
         }
 
         System.out.println(cur);
 
+        while(nodeGraph1[])
 
         System.out.println( graphName + " Best lca " + v1 + " " + v2 + " Distance: " + best.dist + " Ancestor " + best.pred + " Path:" + reportPath( v1, v2, best.pred ) );
 
