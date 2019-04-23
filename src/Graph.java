@@ -49,7 +49,7 @@ public class Graph {
      * @return returns the length of the shortest ancestral path.
      **************************************************************************/
     public int lca(int v1, int v2) {
-        PathInfo best = new PathInfo(getPath(v1, v2));
+        PathInfo best = getPath(v1, v2);
         System.out.println( graphName + " Best lca " + v1 + " " + v2 + " Distance: " + best.dist + " Ancestor " + best.pred + " Path: " + best );
         return best.dist;
     }
@@ -61,7 +61,7 @@ public class Graph {
      * @param v2: second vertex
      * @return a String with the path separated with spaces and a "|" char after the lca
      ***********************************************************************************/
-    private String getPath(int v1, int v2) {
+    private PathInfo getPath(int v1, int v2) {
         int[] nodeGraph1 = new int[numVertex];
         for(int i = 0; i < this.numVertex; i++) {
             nodeGraph1[i] = -1;
@@ -92,40 +92,7 @@ public class Graph {
                 nodeQueue2.add(E.to);
             }
         }
-        return path1(nodeGraph1, cur) + "|" + path2(nodeGraph2, nodeGraph2[cur]);
-    }
-
-    /*******************************************************************************
-     * Formats the list path to the least common ancestor into a string
-     * @param l1: list of elements in the path
-     * @param node: the current node that is being worked on in the list
-     * @return returns the string of the path
-     *******************************************************************************/
-    private String path1(int[] l1, int node) {
-        if(l1[node] > this.numVertex) {
-            return Integer.toString(node);
-        }
-        else {
-            return path1(l1, l1[node]) +  " " + node;
-        }
-    }
-
-    /*******************************************************************************
-     * Formats the list path to the least common ancestor into a string
-     * @param l2: list of elements in the path
-     * @param node: the current node that is being worked on in the list
-     * @return returns the string of the path
-     *******************************************************************************/
-    private String path2(int[] l2, int node) {
-        if(node < 0) {
-            return "";
-        }
-        if(l2[node] < 0) {
-            return Integer.toString(node);
-        }
-        else {
-            return node + " " + path2(l2, l2[node]);
-        }
+        return new PathInfo(nodeGraph1, nodeGraph2, cur);
     }
 
     /*******************************************************************************
