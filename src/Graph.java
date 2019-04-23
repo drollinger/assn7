@@ -153,10 +153,33 @@ public class Graph {
         }
     }
 
-    public int outcast(int[] v) {                    //TODO: THIS
+    public int outcast(int[] v) {
+        int[] sums = new int[v.length];
+        int maxSum = -1;
         int outcast = -1;
+        int pathLength;
 
-        System.out.println( "The outcast of " + Arrays.toString( v ) + " is " + outcast );
+        System.out.println("\n--Outcast on " + this.graphName + "--");
+        for(int i = 0; i < sums.length; i++) {
+            sums[i] = 0;
+        }
+
+        for(int curNode = 0; curNode < v.length - 1; curNode++) {
+            for (int otherNode = curNode + 1; otherNode < v.length; otherNode++) {
+                pathLength = lca(v[curNode], v[otherNode]);
+                sums[curNode] += pathLength;
+                sums[otherNode] += pathLength;
+            }
+        }
+
+        for(int i = 0; i < sums.length; i++) {
+            if(sums[i] > maxSum) {
+                maxSum = sums[i];
+                outcast = v[i];
+            }
+        }
+
+        System.out.println( "The outcast of " + Arrays.toString( v ) + " is " + outcast + " with distance sum of " + maxSum);
         return outcast;
 
     }
@@ -169,6 +192,7 @@ public class Graph {
         int[] set2 = {7, 17, 5, 11, 4, 23};
         int[] set3 = {10, 17, 13};
 
+        graph1.lca( 3, 3 );
         graph1.lca( 3, 7 );
         graph1.lca( 5, 6 );
         graph1.lca( 9, 1 );

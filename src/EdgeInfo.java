@@ -1,3 +1,6 @@
+/********************************************
+ * Provided code to track edges in our graph
+ *******************************************/
 public class EdgeInfo {
     int from;        // source of edge
     int to;          // destination of edge
