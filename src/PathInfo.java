@@ -1,11 +1,13 @@
-import java.nio.file.Path;
-import java.util.regex.*;
-
+/****************************************************************************
+ * Provided class that was modified to create pathInfo based off of the node
+ * graphs given to it.
+ ***************************************************************************/
 public class PathInfo {
     int dist;
     int pred;
     String path;
 
+    // Main constructor
     PathInfo(int[] nodeGraph1, int[] nodeGraph2, int ancestor) {
         this.pred = ancestor;
         this.path = path1(nodeGraph1, ancestor) + " " + path2(nodeGraph2, nodeGraph2[ancestor]);

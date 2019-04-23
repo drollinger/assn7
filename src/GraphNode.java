@@ -1,3 +1,6 @@
+/********************************
+ * Provided class to track nodes
+ ********************************/
 import java.util.LinkedList;
 
 public class GraphNode {
