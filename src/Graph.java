@@ -106,7 +106,7 @@ public class Graph {
         int maxSum = -1;
         int outcast = -1;
         int pathLength;
-        System.out.println("\n--Outcast on " + this.graphName + "--");
+        System.out.println("\n-----Outcast on " + this.graphName + "-----");
         for(int i = 0; i < sums.length; i++) {
             sums[i] = 0;
         }
@@ -123,7 +123,9 @@ public class Graph {
                 outcast = nodes[i];
             }
         }
+        System.out.println("------------------------------------------------------");
         System.out.println( "The outcast of " + Arrays.toString( nodes ) + " is " + outcast + " with distance sum of " + maxSum);
+        System.out.println("------------------------------------------------------");
         return outcast;
     }
 
@@ -136,7 +138,6 @@ public class Graph {
         int[] set2 = {7, 17, 5, 11, 4, 23};
         int[] set3 = {10, 17, 13};
 
-        graph1.lca( 3, 3 );
         graph1.lca( 3, 7 );
         graph1.lca( 5, 6 );
         graph1.lca( 9, 1 );
