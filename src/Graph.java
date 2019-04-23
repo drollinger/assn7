@@ -59,14 +59,6 @@ public class Graph {
         }
     }
 
-
-    public void clearAllPred() {
-        for (int i = 0; i < numVertex; i++) {
-            G[i].p1.clear();
-            G[i].p2.clear();
-        }
-    }
-
     /**                                                                    //TODO: THIS
      * Find the path from v1 to v2 going through anc.
      *
@@ -91,8 +83,14 @@ public class Graph {
      */
     public int lca(int v1, int v2) {
         // Compute lca
-        PathInfo best = new PathInfo();
+        PathInfo best = new PathInfo(getPath(v1, v2));
 
+        System.out.println( graphName + " Best lca " + v1 + " " + v2 + " Distance: " + best.dist + " Ancestor " + best.pred + " Path: " + best );
+
+        return best.dist;
+    }
+
+    private String getPath(int v1, int v2) {
         int[] nodeGraph1 = new int[numVertex];
         for(int i = 0; i < this.numVertex; i++) {
             nodeGraph1[i] = -1;
@@ -131,14 +129,28 @@ public class Graph {
             }
         }
 
-        System.out.println(cur);
+        return path1(nodeGraph1, cur) + "|" + path2(nodeGraph2, nodeGraph2[cur]);
+    }
 
-        while(nodeGraph1[])
+    private String path1(int[] l1, int node) {
+        if(l1[node] > this.numVertex) {
+            return Integer.toString(node);
+        }
+        else {
+            return path1(l1, l1[node]) +  " " + node;
+        }
+    }
 
-        System.out.println( graphName + " Best lca " + v1 + " " + v2 + " Distance: " + best.dist + " Ancestor " + best.pred + " Path:" + reportPath( v1, v2, best.pred ) );
-
-        clearAllPred();
-        return best.dist;
+    private String path2(int[] l2, int node) {
+        if(node < 0) {
+            return "";
+        }
+        if(l2[node] < 0) {
+            return Integer.toString(node);
+        }
+        else {
+            return node + " " + path2(l2, l2[node]);
+        }
     }
 
     public int outcast(int[] v) {                    //TODO: THIS
